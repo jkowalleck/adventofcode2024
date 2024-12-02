@@ -1,6 +1,5 @@
 __all__ = ['report']
 
-import re
 from os import path
 
 report = []
