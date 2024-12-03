@@ -2,7 +2,6 @@ from re import compile
 
 from input import lines
 
-
 _INSTR_PATTERN = compile(r"mul\((\d{1,3}),(\d{1,3})\)|(do|don't)\(\)")
 
 muls = []
