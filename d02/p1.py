@@ -1,5 +1,6 @@
-from input import report
 from itertools import pairwise
+
+from input import report
 
 safe = 0
 for r in report:
