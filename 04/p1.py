@@ -4,6 +4,7 @@ from input import lines
 
 _PATTERN = re.compile(r'(?=XMAS|SAMX)')
 
+
 # Python3 program for the above approach
 
 # Function to rotate matrix by 45 degree
@@ -22,6 +23,7 @@ def matrix_rotate_45(li):
     yield lst
     ctr += 1
 
+
 def matrix_rotate_n45(li):
   lines = len(li)
   cols = len(li[0])
@@ -35,14 +37,18 @@ def matrix_rotate_n45(li):
     yield lst
     ctr += 1
 
+
 def matrix_trans(li):
   return zip(*li)
 
-cnt = (
-  len(_PATTERN.findall('|'.join(''.join(cs) for cs in lines))) # --
-+ len(_PATTERN.findall('|'.join(''.join(cs) for cs in matrix_trans(lines)))) # |
-+ len(_PATTERN.findall('|'.join(''.join(cs) for cs in matrix_rotate_45(lines)))) # /
-+ len(_PATTERN.findall('|'.join(''.join(cs) for cs in matrix_rotate_n45(lines)))) # \
-)
 
+cnt = sum(
+  len(_PATTERN.findall('|'.join(''.join(cs) for cs in ls)))
+  for ls in (
+    lines,  # --
+    matrix_trans(lines),  # |
+    matrix_rotate_45(lines),  # /
+    matrix_rotate_n45(lines),  # \
+  )
+)
 print('cnt', cnt)
