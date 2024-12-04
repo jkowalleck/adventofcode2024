@@ -13,12 +13,12 @@ def matrix_rotate_45(li, pos):
     (lambda l: lines - l - 1)
   ctr = 0
   while ctr < lines + cols - 1:
-    lst = []
-    for l in range(lines):
-      for c in range(cols):
-        if c + l == ctr:
-          lst.append(li[posm(l)][c])
-    yield lst
+    yield tuple(
+      li[posm(l)][c]
+      for l in range(lines)
+      for c in range(cols)
+      if c + l == ctr
+    )
     ctr += 1
 
 
