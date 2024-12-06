@@ -24,7 +24,7 @@ step_forward = {
   Direction.U: lambda x, y: (x, y - 1),
   Direction.R: lambda x, y: (x + 1, y),
   Direction.D: lambda x, y: (x, y + 1),
-  Direction.L: lambda x, y: (x - 1, y)
+  Direction.L: lambda x, y: (x - 1, y),
 }
 
 
@@ -38,34 +38,32 @@ rot = {
   Direction.U: Direction.R,
   Direction.R: Direction.D,
   Direction.D: Direction.L,
-  Direction.L: Direction.U
+  Direction.L: Direction.U,
 }
 
-blockades = ('#', 'O')
+blockades = {'#', 'O'}
+
 
 def find_loop(field, x, y, d):
   visited = set()
   while True:
     visited.add((x, y, d))
-
     # input()
     # render(field)
-    sx, sy = step_forward[d](x, y)
 
+    sx, sy = step_forward[d](x, y)
     if sx < 0 or sy < 0 or sx >= width or sy >= height:
       field[y][x] = 'X'
       # render(field)
       return False, visited
-
     field[y][x] = 'X'
 
     while field[sy][sx] in blockades:
       d = rot[d]
       sx, sy = step_forward[d](x, y)
-
     x, y = sx, sy
-
     field[y][x] = d.value
+
     if (x, y, d) in visited:
       return True, visited
 
