@@ -23,7 +23,7 @@ You start by making a map (your puzzle input) of the situation. For example:
 ......#...
 ```
 
-The map shows the current position of the guard with ^ (to indicate the guard is currently facing up from the perspective of the map). Any obstructions - crates, desks, alchemical reactors, etc. - are shown as #.
+The map shows the current position of the guard with ^ (to indicate the guard is currently facing up from the perspective of the map). Any obstructions - crates, desks, alchemical reactors, etc. - are shown as `#`.
 
 Lab guards in 1518 follow a very strict patrol protocol which involves repeatedly following these steps:
 
