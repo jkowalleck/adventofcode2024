@@ -40,14 +40,10 @@ for et, es in emitters.items():
   for e1, e2 in combinations(es, 2):
     x1, y1 = e1
     x2, y2 = e2
-    xd = x1 - x2
-    yd = y1 - y2
-
+    xd, yd = x1 - x2, y1 - y2
     for s in (+1, -1):
-      _xd = s * xd
-      _yd = s * yd
-      y = y1
-      x = x1
+      _xd, _yd = s * xd, s * yd
+      x, y = x1, y1
       while in_bounds(x, y):
         antinodes.add((x, y))
         x += _xd
