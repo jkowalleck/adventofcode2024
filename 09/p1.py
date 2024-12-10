@@ -27,5 +27,5 @@ while p < len(disk):
 
 # print('disk: ', *disk, sep='')
 
-checksum = sum(e*f for e,f in enumerate(disk))
+checksum = sum(e * f for e, f in enumerate(disk))
 print('checksum', checksum)
