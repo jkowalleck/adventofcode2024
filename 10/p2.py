@@ -22,8 +22,7 @@ tops = {
 }
 
 
-def foo(cur, start):
-  cx, cy = cur
+def foo(cx, cy):
   c = map[cy][cx]
   for xd, yd in dirs:
     x, y = cx + xd, cy + yd
@@ -31,17 +30,15 @@ def foo(cur, start):
       continue  # next dir
     if map[y][x] != c + 1:
       continue  # next dir
-    next = (x, y)
     if map[y][x] == 9:
-      tops[next] += 1
+      tops[(x, y)] += 1
     else:
-      foo(next, start)
+      foo(x, y)
 
 
 for y, line in enumerate(map):
   for x, char in enumerate(line):
     if char == 0:
-      start = (x, y)
-      foo(start, start)
+      foo(x, y)
 
 print('res', sum(tops.values()))
