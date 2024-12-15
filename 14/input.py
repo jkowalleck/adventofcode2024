@@ -1,8 +1,7 @@
 __all__ = ['inp']
 
-from collections import namedtuple
-from os import path
 import re
+from os import path
 
 matcher = re.compile(r'^p=(\d+),(\d+) v=([+-]?\d+),([+-]?\d+)$')
 

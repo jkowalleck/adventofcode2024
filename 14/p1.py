@@ -1,4 +1,3 @@
-import re
 from functools import reduce
 from math import ceil, floor
 
