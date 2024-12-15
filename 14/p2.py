@@ -22,7 +22,7 @@ def render(f, tt):
   x, y = tt
   print('T: ', turns, 'x', x, 'y', y)
   try:
-    for ry in range(y-5, y + th):
+    for ry in range(y - 5, y + th):
       for rx in range(x - tw, x + tw):
         print(f[ry][rx], end='')
       print()
@@ -50,6 +50,7 @@ def is_tree(f):
       except IndexError:
         pass
   return None
+
 
 tt = None
 while tt is None:
