@@ -44,8 +44,8 @@ def move_it(m):
     return
   # print('move:', m)
   xp, yp = pos
-  map[yp][xp] = '.';
-  pos[0] += xd;
+  map[yp][xp] = '.'
+  pos[0] += xd
   pos[1] += yd
   for p in range(len(push) - 1):
     xp += xd
