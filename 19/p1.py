@@ -7,7 +7,7 @@ have, _, *wants = inp('kow')
 have_opt = set(have.split(', '))
 for h in tuple(have_opt):
     have_opt.remove(h)
-    pat = re.compile(f'^(:?{"|".join(have_opt)})+$')
+    pat = re.compile(f'^(?:{"|".join(have_opt)})+$')
     if pat.match(h) is None:
         have_opt.add(h)
 
