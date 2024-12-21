@@ -20,6 +20,7 @@ goal = (width - 1, height - 1)
 
 dirs = ((-1, 0), (1, 0), (0, -1), (0, 1))
 
+
 def neighbors_fnct(pos):
   x, y = pos
   for dx, dy in dirs:
@@ -36,4 +37,4 @@ solved = list(astar.find_path(
   goal=goal,
   neighbors_fnct=neighbors_fnct,
 ))
-print('steps:', len(solved)-1)
+print('steps:', len(solved) - 1)

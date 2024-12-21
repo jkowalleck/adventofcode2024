@@ -45,4 +45,3 @@ for i, m in enumerate(mems, mcnt_p1):
   ):
     print('blocker:', f'{mx},{my}')
     break
-
