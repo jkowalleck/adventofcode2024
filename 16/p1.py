@@ -37,29 +37,32 @@ def render(way, waylen):
   print('waylen', waylen)
 
 ways2E = set()
-way = [[-1, start]]
-while len(way):
-  s = way[-1]
-  s[0] += 1
-  d, p = s
-  if d > 3:
-    way.pop()
-    continue
-  dx, dy = dirs[d]
-  px, py = p
-  nx, ny = n = px + dx, py + dy
-  nc = mace[ny][nx]
-  if nc == '#':
-    continue  # wall
-  if nc == 'S':
-    continue  # circle
-  if any(p == n for _, p in way):
-    continue  # circle
-  if nc == 'E':
-    ways2E.add(tuple(map(tuple, way)))
-    way.pop()
-    continue
-  way.append([-1, n])
+def solve_mace():
+  way = [[-1, start]]
+  while len(way):
+    s = way[-1]
+    s[0] += 1
+    d, p = s
+    if d > 3:
+      way.pop()
+      continue
+    dx, dy = dirs[d]
+    px, py = p
+    nx, ny = n = px + dx, py + dy
+    nc = mace[ny][nx]
+    if nc == '#':
+      continue  # wall
+    if nc == 'S':
+      continue  # circle
+    if any(p == n for _, p in way):
+      continue  # circle
+    if nc == 'E':
+      ways2E.add(tuple(map(tuple, way)))
+      way.pop()
+      continue
+    way.append([-1, n])
+
+solve_mace()
 
 waylens = []
 for way in ways2E:
