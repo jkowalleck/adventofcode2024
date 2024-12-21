@@ -9,8 +9,6 @@ possibilities
 towel: abcdef
 """
 
-from collections import defaultdict
-
 from Tools.scripts.ndiff import fopen
 
 
@@ -19,6 +17,7 @@ def parse_input(input_data):
   towel_patterns = sections[0].split(", ")
   designs = sections[1].split("\n")
   return towel_patterns, designs
+
 
 def can_form_design(patterns, design, memo):
   if design in memo:
@@ -32,12 +31,14 @@ def can_form_design(patterns, design, memo):
   memo[design] = count
   return count
 
+
 def count_possible_designs(towel_patterns, designs):
   total_count = 0
   memo = {}
   for design in designs:
     total_count += can_form_design(towel_patterns, design, memo)
   return total_count
+
 
 # Example usage
 input_data = """r, wr, b, g, bwu, rb, gb, br
