@@ -11,7 +11,7 @@ for h in tuple(have_opt):
     if pat.match(h) is None:
         have_opt.add(h)
 
-pat = re.compile(f'^(:?{"|".join(have_opt)})+$')
+pat = re.compile(f'^(:?{"|".join(sorted(have_opt))})+$')
 
 print('have_opt:', len(have_opt), sorted(have_opt))
 print('pat:', pat)
