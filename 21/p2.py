@@ -99,20 +99,20 @@ def kp_ft(f, t):
   if f in ('0', A) and t in ('7', '4', '1'):
     return dy * abs(my) + dx * abs(mx)
   return (dy * abs(my) + dx * abs(mx)) \
-    if randint(0, 1) \
+    if my > 0 \
     else (dx * abs(mx) + dy * abs(my))
 
 
 input = """
-540A
-582A
-169A
-593A
-579A
+029A
+980A
+179A
+456A
+379A
 """.strip().split('\n')
 
 sm = 176870
-for _ in range(200000):
+for _ in range(1):
   inst_sum = 0
   for line in input:
     last_c1 = A
@@ -124,7 +124,7 @@ for _ in range(200000):
       # print('r1', c1, inst_r1)
       last_c1 = c1
       for c2 in inst_r1:
-        ir2o = kp_dirs[(last_c2, c2)][0 if pick_c2 else -1]
+        ir2o = kp_dirs[(last_c2, c2)][0 else -1]
         inst_r2 = ir2o + A
         # print('  r2', c2, inst_r2)
         inst_r2_r3 = ''
