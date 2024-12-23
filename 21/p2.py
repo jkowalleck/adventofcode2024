@@ -108,6 +108,21 @@ input = """
 """.strip().split('\n')
 
 
+last_cs = dict()
+cache = dict()
+
+inst_me = []
+def bot(inst, b):
+  last_cs.setdefault(b, A)
+  for c in inst:
+    inst_s = kp_dirs[(last_cs[b], c)][0] + A
+    last_cs[b] = c
+    if b == 1:
+      inst_me.append(inst_s)
+    else:
+      bot(inst_s, b-1)
+
+
 inst_sum = 0
 for line in input:
   last_c1 = A
@@ -117,15 +132,7 @@ for line in input:
   for c1 in line:
     inst_r1 = kp_ft(last_c1, c1) + A
     last_c1 = c1
-    for c2 in inst_r1:
-      ir2o = kp_dirs[(last_c2, c2)][0]
-      inst_r2 = ir2o + A
-      inst_r2_r3 = ''
-      last_c2 = c2
-      for c3 in inst_r2:
-        inst_r3 = kp_dirs[(last_c3, c3)][0] + A
-        last_c3 = c3
-        inst_me.append(inst_r3)
+    bot(inst_r1, 2)
 
   inst_me = ''.join(inst_me)
   inst_sum += int(line[:-1]) * len(inst_me)

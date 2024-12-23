@@ -118,9 +118,7 @@ for line in input:
     inst_r1 = kp_ft(last_c1, c1) + A
     last_c1 = c1
     for c2 in inst_r1:
-      ir2o = kp_dirs[(last_c2, c2)][0]
-      inst_r2 = ir2o + A
-      inst_r2_r3 = ''
+      inst_r2 = kp_dirs[(last_c2, c2)][0] + A
       last_c2 = c2
       for c3 in inst_r2:
         inst_r3 = kp_dirs[(last_c3, c3)][0] + A
