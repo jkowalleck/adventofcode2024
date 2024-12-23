@@ -15,6 +15,7 @@
 | < | v | > |
 +---+---+---+
 """
+import random
 
 """
 <vA<AA>>UAADAULARAA
@@ -95,7 +96,7 @@ def kp_ft(f, t):
   if f in ('0', A) and t in ('7', '4', '1'):
     return dy * abs(my) + dx * abs(mx)
   return (dy * abs(my) + dx * abs(mx)) \
-    if my > 0 \
+    if random.randint(0, 1) > 0 \
     else (dx * abs(mx) + dy * abs(my))
 
 
@@ -107,7 +108,6 @@ input = """
 670A
 """.strip().split('\n')
 
-
 last_cs = dict()
 cache_m = dict()
 
@@ -118,7 +118,7 @@ def bot(inst, b):
     inst_s = kp_dirs[(last_cs[b], c)][0] + A
     last_cs[b] = c
     if b == 1:
-      inst_ss.append(inst_s)
+      inst_ss.append(len(inst_s))
     else:
       cachek = (b, inst_s)
       if cachek in cache_m:
@@ -126,7 +126,7 @@ def bot(inst, b):
       else:
         ss = cache_m[cachek] = bot(inst_s, b-1)
       inst_ss.append(ss)
-  return inst_ss
+  return sum(inst_ss)
 
 def calc_len(inst):
   l = 0
@@ -139,17 +139,19 @@ def calc_len(inst):
         calc_lens(i)
   return calc_lens(inst)
 
-inst_sum = 0
-for line in input:
-  last_c = A
-  inst_me = []
-  for c in line:
-    inst_d = kp_ft(last_c, c) + A
-    last_c = c
-    inst_me.append(bot(inst_d, 25))
+smallest = 9154154076501218
+for _ in range(10000):
+  inst_sum = 0
+  for line in input:
+    last_c = A
+    inst_me = []
+    for c in line:
+      inst_d = kp_ft(last_c, c) + A
+      last_c = c
+      inst_me.append(bot(inst_d, 25))
 
+    inst_sum += int(line[:-1]) * sum(inst_me)
+  if inst_sum < smallest:
+    smallest = inst_sum
 
-
-  inst_sum += int(line[:-1]) * calc_len(inst_me)
-
-print(inst_sum)
+print(smallest)
