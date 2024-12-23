@@ -107,7 +107,6 @@ input = """
 670A
 """.strip().split('\n')
 
-
 inst_sum = 0
 for line in input:
   last_c1 = A

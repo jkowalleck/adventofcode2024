@@ -111,6 +111,7 @@ input = """
 last_cs = dict()
 cache_m = dict()
 
+
 def bot(inst, b):
   last_cs.setdefault(b, A)
   inst_ss = []
@@ -124,12 +125,14 @@ def bot(inst, b):
       if cachek in cache_m:
         ss = cache_m[cachek]
       else:
-        ss = cache_m[cachek] = bot(inst_s, b-1)
+        ss = cache_m[cachek] = bot(inst_s, b - 1)
       inst_ss.append(ss)
   return sum(inst_ss)
 
+
 def calc_len(inst):
   l = 0
+
   def calc_lens(inst):
     nonlocal l
     if type(inst) == str:
@@ -137,7 +140,9 @@ def calc_len(inst):
     else:
       for i in inst:
         calc_lens(i)
+
   return calc_lens(inst)
+
 
 smallest = 9154154076501218
 for _ in range(10000):
