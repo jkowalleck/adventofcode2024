@@ -130,21 +130,7 @@ def bot(inst, b):
   return sum(inst_ss)
 
 
-def calc_len(inst):
-  l = 0
-
-  def calc_lens(inst):
-    nonlocal l
-    if type(inst) == str:
-      l += len(inst)
-    else:
-      for i in inst:
-        calc_lens(i)
-
-  return calc_lens(inst)
-
-
-smallest = 9154154076501218
+smallest = 9999999999999999
 for _ in range(10000):
   inst_sum = 0
   for line in input:
