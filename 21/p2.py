@@ -111,16 +111,15 @@ input = """
 last_cs = dict()
 cache = dict()
 
-inst_me = []
 def bot(inst, b):
   last_cs.setdefault(b, A)
   for c in inst:
     inst_s = kp_dirs[(last_cs[b], c)][0] + A
     last_cs[b] = c
     if b == 1:
-      inst_me.append(inst_s)
+      yield inst_s
     else:
-      bot(inst_s, b-1)
+      yield from bot(inst_s, b-1)
 
 
 inst_sum = 0
@@ -132,9 +131,9 @@ for line in input:
   for c1 in line:
     inst_r1 = kp_ft(last_c1, c1) + A
     last_c1 = c1
-    bot(inst_r1, 2)
+    inst_me.append(bot(inst_r1, 2))
 
-  inst_me = ''.join(inst_me)
+  inst_me = ''.join(''.join(b) for b in inst_me)
   inst_sum += int(line[:-1]) * len(inst_me)
 
 print(inst_sum)
