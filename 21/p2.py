@@ -133,14 +133,12 @@ def bot(inst, b):
 
 inst_sum = 0
 for line in input:
-  last_c1 = A
-  last_c2 = A
-  last_c3 = A
+  last_c = A
   inst_me = []
-  for c1 in line:
-    inst_r1 = kp_ft(last_c1, c1) + A
-    last_c1 = c1
-    inst_me.append(bot(inst_r1, 25))
+  for c in line:
+    inst_d = kp_ft(last_c, c) + A
+    last_c = c
+    inst_me.append(bot(inst_d, 2))
 
   inst_me = ''.join(''.join(b) for b in inst_me)
   inst_sum += int(line[:-1]) * len(inst_me)
