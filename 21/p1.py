@@ -16,25 +16,6 @@
 +---+---+---+
 """
 
-"""
-<vA<AA>>UAADAULARAA
-  v <<   AA >  U AA
-         <<      ^^
-
-DLLARALARRUAADAULARAA
-   < V <   AA >  U AA
-           <<      ^^
-
-----
-
-DLLARRUAADLALARRUAA
-   L   AA  D L   AA
-       UU        LL
-
-"""
-
-from random import randint
-
 A = 'A'
 U = '^'
 D = 'v'
