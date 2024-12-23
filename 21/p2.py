@@ -15,26 +15,8 @@
 | < | v | > |
 +---+---+---+
 """
+
 import random
-
-"""
-<vA<AA>>UAADAULARAA
-  v <<   AA >  U AA
-         <<      ^^
-
-DLLARALARRUAADAULARAA
-   < V <   AA >  U AA
-           <<      ^^
-
-----
-
-DLLARRUAADLALARRUAA
-   L   AA  D L   AA
-       UU        LL
-
-"""
-
-import sys
 
 A = 'A'
 U = '^'
