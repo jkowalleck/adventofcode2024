@@ -33,7 +33,7 @@ DLLARRUAADLALARRUAA
 
 """
 
-from random import randint
+import sys
 
 A = 'A'
 U = '^'
@@ -109,7 +109,7 @@ input = """
 
 
 last_cs = dict()
-cache = dict()
+cache_m = dict()
 
 def bot(inst, b):
   last_cs.setdefault(b, A)
@@ -121,15 +121,23 @@ def bot(inst, b):
       inst_ss.append(inst_s)
     else:
       cachek = (b, inst_s)
-      if cachek in cache:
-        ss = cache[cachek]
-        print('hit', cachek)
+      if cachek in cache_m:
+        ss = cache_m[cachek]
       else:
-        ss = cache[cachek] = tuple(bot(inst_s, b-1))
-      for s in ss:
-        inst_ss.append(s)
+        ss = cache_m[cachek] = bot(inst_s, b-1)
+      inst_ss.append(ss)
   return inst_ss
 
+def calc_len(inst):
+  l = 0
+  def calc_lens(inst):
+    nonlocal l
+    if type(inst) == str:
+      l += len(inst)
+    else:
+      for i in inst:
+        calc_lens(i)
+  return calc_lens(inst)
 
 inst_sum = 0
 for line in input:
@@ -138,9 +146,10 @@ for line in input:
   for c in line:
     inst_d = kp_ft(last_c, c) + A
     last_c = c
-    inst_me.append(bot(inst_d, 2))
+    inst_me.append(bot(inst_d, 25))
 
-  inst_me = ''.join(''.join(b) for b in inst_me)
-  inst_sum += int(line[:-1]) * len(inst_me)
+
+
+  inst_sum += int(line[:-1]) * calc_len(inst_me)
 
 print(inst_sum)
