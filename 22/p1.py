@@ -1,4 +1,3 @@
-
 def mrand(salt):
   secret = salt
   while True:
@@ -12,10 +11,9 @@ secrets = map(int, open('kow.txt').read().split('\n'))
 secret2k = []
 for secret in secrets:
   rsecret = mrand(secret)
-  for _ in range(2000-1):
+  for _ in range(2000 - 1):
     next(rsecret)
   secret2k.append(next(rsecret))
 
 res = sum(secret2k)
 print('res', res)
-
