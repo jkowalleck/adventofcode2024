@@ -28,7 +28,7 @@ for s, secret in enumerate(secrets):
     prize = next(rsecret) % 10
     price_seq.append(prize - lprice)
 
-  for _ in range(2000):
+  for _ in range(2000 - 1):
     price_seq_t = tuple(price_seq)
     if price_seq_t not in _prices_seqs:
       _prices_seqs[price_seq_t] = prize
@@ -40,18 +40,14 @@ for s, secret in enumerate(secrets):
 print('calc prices_seqs_u')
 prices_seqs_u = set(chain.from_iterable(s.keys() for s in prices_seqs))
 
-print('calc prices_seqs_sums')
-prices_seqs_sums = {s: sum(ps.get(s, 0) for ps in prices_seqs) for s in prices_seqs_u}
-
 print('calc best_sum')
 best_sum = 0
 best_k = None
-for k, s in prices_seqs_sums.items():
+for k in prices_seqs_u:
+  s = sum(ps.get(k, 0) for ps in prices_seqs)
   if s > best_sum:
     best_sum = s
     best_k = k
-
-# 2252
 
 print('best_sum', best_sum)
 print('best_k', best_k)
