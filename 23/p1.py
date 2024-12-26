@@ -12,7 +12,7 @@ for con in open('kow.txt').read().split('\n'):
     cons[b].add(a)
   else:
     cons[b] = {a, }
-del a, b
+del a, b, con
 
 groups = set()
 for f, ts in cons.items():

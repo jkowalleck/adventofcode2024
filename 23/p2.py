@@ -12,19 +12,20 @@ for con in open('kow.txt').read().split('\n'):
     cons[b].add(a)
   else:
     cons[b] = {a, }
-del a, b
+del a, b, con
 
 groups = set()
 for f, ts in cons.items():
-  for n in range(len(ts), 2, -1):
+  for n in range(len(ts) + 1, 3, -1):
     found = False
-    for kn in combinations(ts, n):
+    for kn in combinations(ts, n - 1):
       k = {f, *kn}
-      if all(n + 1 == len({i, *cons[i]} & k) for i in kn):
+      if all(n == len({i, *cons[i]} & k) for i in kn):
         groups.add(tuple(sorted(k)))
         found = True
         break
     if found:
       break
 
-print('res', ','.join(sorted(max(groups, key=len))))
+longest = max(groups, key=len)
+print('res', ','.join(longest))
