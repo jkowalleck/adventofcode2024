@@ -1,8 +1,8 @@
-from itertools import chain, pairwise, combinations
+from itertools import combinations
 
 cons = {}
 
-for con in open('sample.txt').read().split('\n'):
+for con in open('kow.txt').read().split('\n'):
   a, b = con.split('-')
   if a in cons:
     cons[a].add(b)
@@ -20,6 +20,6 @@ for f, ts in cons.items():
     continue
   for c1, c2 in combinations(ts, 2):
     if c1 in cons[c2]:
-      groups.add(tuple(sorted([f, c1, c2])))
+      groups.add(tuple(sorted((f, c1, c2))))
 
 print('res', len(groups))
