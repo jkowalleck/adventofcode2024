@@ -1,4 +1,4 @@
-from itertools import chain, pairwise, combinations
+from itertools import combinations
 
 cons = {}
 
