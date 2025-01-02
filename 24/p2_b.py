@@ -52,7 +52,6 @@ def reg2int(regs, w):
 
 o_regs = {}
 o_grid = []
-o_grid_t = {}
 
 init, gates = open('muuh.txt').read().split('\n\n')
 for i in init.split('\n'):
@@ -60,9 +59,7 @@ for i in init.split('\n'):
   o_regs[r] = s == '1'
 for g in gates.split('\n'):
   a, op, b, _, t = g.split(' ')
-  g = [a, b, OPS[op], t]
-  o_grid.append(g)
-  o_grid_t[t] = g
+  o_grid.append((a, b, OPS[op], t))
 
 """
 wie funktioniert binary addition?
@@ -89,6 +86,7 @@ def find_dep_targets(k, grid):
     l = lfg.pop(0)
     a, b, _, t = tree[l]
     deps.append(t)
+    a, b = min(a, b), max(a, b)
     if a[0] not in givens:
       lfg.append(a)
     if b[0] not in givens:
@@ -114,34 +112,20 @@ for wa, wb in pairwise(atree):
   stree[f'{wa}_{wb}'] = set(atree[wb]).difference(atree[wa])
 
 
-bla = 17
-korrekt = set(chain.from_iterable(atree[f'z{w:02d}'] for w in range(bla)))
-unused = tuple(set(o_grid_t.keys()).difference(korrekt))
-switchers = []
-
-while True:
-  print('.', end='')
-
-  switcher = random.choice(wtree[f'z{bla:02d}'])
-  switchers.append(switcher)
-  for switcher in random.sample(unused, k=7):
-    switchers.append(switcher)
-  o_grid_t[switchers[0]][3], o_grid_t[switchers[1]][3] = o_grid_t[switchers[1]][3], o_grid_t[switchers[0]][3]
-  o_grid_t[switchers[2]][3], o_grid_t[switchers[3]][3] = o_grid_t[switchers[3]][3], o_grid_t[switchers[2]][3]
-  o_grid_t[switchers[4]][3], o_grid_t[switchers[5]][3] = o_grid_t[switchers[5]][3], o_grid_t[switchers[4]][3]
-  o_grid_t[switchers[6]][3], o_grid_t[switchers[7]][3] = o_grid_t[switchers[7]][3], o_grid_t[switchers[6]][3]
-
-  regs = o_regs.copy()
-  try:
-    run_grid(o_grid.copy(), regs)
-  except ValueError:
-    continue
-
-  if reg2int(regs, 'z') == expected_z:
-    print('found', switchers)
-    break
-  else:
-    o_grid_t[switchers[0]][3], o_grid_t[switchers[1]][3] = o_grid_t[switchers[1]][3], o_grid_t[switchers[0]][3]
-    o_grid_t[switchers[2]][3], o_grid_t[switchers[3]][3] = o_grid_t[switchers[3]][3], o_grid_t[switchers[2]][3]
-    o_grid_t[switchers[4]][3], o_grid_t[switchers[5]][3] = o_grid_t[switchers[5]][3], o_grid_t[switchers[4]][3]
-    o_grid_t[switchers[6]][3], o_grid_t[switchers[7]][3] = o_grid_t[switchers[7]][3], o_grid_t[switchers[6]][3]
+dings1 = set(atree['z21']).difference(atree['z17'])
+dings2 = set(atree['z17']).difference(atree['z21'])
+pass
+for d2 in dings2:
+  d2_in_grid = next(g for g in o_grid if g[3] == d2)
+  for d1 in dings1:
+    d1_in_grid = next(g for g in o_grid if g[3] == d1)
+    grid = o_grid.copy()
+    grid.remove(d1_in_grid)
+    grid.remove(d2_in_grid)
+    grid.append((d1_in_grid[0], d1_in_grid[1], d1_in_grid[2], d2_in_grid[3]))
+    grid.append((d2_in_grid[0], d2_in_grid[1], d2_in_grid[2], d1_in_grid[3]))
+    regs = o_regs.copy()
+    run_grid(grid, regs)
+    if expected_z_regs['z17'] == regs['z17'] and expected_z_regs['z18'] == regs['z18']:
+      print('found')
+      print(d1, d2)
