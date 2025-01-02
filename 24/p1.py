@@ -22,26 +22,26 @@ OPS = {
   'XOR': g_xor,
 }
 
-regs = dict()
-grid = set()
+regs = {}
+grid = []
 
-init, gates = open('kow.txt').read().split('\n\n')
+init, gates = open('muuh.txt').read().split('\n\n')
 for i in init.split('\n'):
   r, s = i.split(': ')
   regs[r] = s == '1'
 for g in gates.split('\n'):
   a, op, b, _, t = g.split(' ')
-  grid.add((a, b, OPS[op], t))
+  grid.append((a, b, OPS[op], t))
 
 while len(grid):
-  g = grid.pop()
+  g = grid.pop(0)
   a, b, op, t = g
   if t in regs:
     continue
   if a in regs and b in regs:
     regs[t] = op(regs[a], regs[b])
   else:
-    grid.add(g)
+    grid.append(g)
 
 res = 0
 z_max = max(int(r[1:]) for r in regs if r.startswith('z'))
