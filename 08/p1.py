@@ -16,7 +16,7 @@ for each pair of emitters:
 # rule 3: antinodes koenen auf der pos von emitter sliegen
 # result: anzahl der "unique" positionen von antinodes
 
-field = inp('arm')
+field = inp('muuh')
 height = len(field)
 width = len(field[0])
 

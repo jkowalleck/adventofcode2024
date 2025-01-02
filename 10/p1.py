@@ -2,7 +2,7 @@ from itertools import pairwise
 
 from input import inp
 
-map = inp('kow')
+map = inp('muuh')
 height = len(map)
 width = len(map[0])
 

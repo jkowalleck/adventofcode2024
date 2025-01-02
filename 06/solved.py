@@ -2,7 +2,7 @@ import os
 from enum import Enum
 import math
 
-i = open('../input.txt').read()
+i = open('input.txt').read()
 
 
 class Direction(Enum):
