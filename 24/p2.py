@@ -13,20 +13,20 @@ ALLE x und alle y sind gegeben!
 
 """
 sample run
-y00 XOR x00 -> z00
+y00 XOR x00 -> z00 (z02_value)
 x00 AND y00 -> kkc (z00_carry_out)
 y01 XOR x01 -> kjh (z01_self)
-kjh XOR kkc -> z01
+kjh XOR kkc -> z01 (z02_value)
 kjh AND kkc -> jjv (z01_carry_out)
 x01 AND y01 -> npn (z01_carry_in)
 npn OR  jjv -> jpt (z01_carry)
 y02 XOR x02 -> jvk (z02_self)
-jpt XOR jvk -> z02
+jpt XOR jvk -> z02 (z02_value)
 jpt AND jvk -> foo (z02_carry_out)
 x02 AND y02 -> bar (z02_carry_in)
 foo OR  bar -> baz (z02_carry)
 y03 XOR x03 -> lol (z03_self)
-baz XOR lol -> z03
+baz XOR lol -> z03 (z02_value)
 """
 
 i_init, i_grid = open('kow.txt').read().split('\n\n')
