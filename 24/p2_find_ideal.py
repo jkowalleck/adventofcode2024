@@ -96,6 +96,8 @@ for gn, gi in zgroups[1].items():
   if gi not in rules.values():
     print('ERROR', gn, gi)
 
+switches = set()
+
 for gi in range(2, 45):
   gp = gi - 1
   xpr, ypr = f'x{gp:02d}', f'y{gp:02d}'
@@ -119,6 +121,22 @@ for gi in range(2, 45):
     print('ERROR', carry)
   value = (min(reg_self, reg_carry), max(reg_self, reg_carry), 'XOR')
   reg_value = find_rule_target(value)
-  if reg_value != zr:
-    print('ERROR', reg_value)
+  if None is reg_value:
+    a, b, op = value = rules[zr]
+    assert op == 'XOR'
+    sa, sb = min(reg_self, reg_carry), max(reg_self, reg_carry)
+    if sa != a:
+      print('switch', a, sa)
+      switches.update((a, sa))
+      rules[a], rules[sa] = rules[sa], rules[a]
+    if sb != b:
+      print('switch', b, sb)
+      switches.update((b, sb))
+      rules[b], rules[sb] = rules[sb], rules[b]
+  elif reg_value != zr:
+    print('switch', reg_value, zr)
+    switches.update((reg_value, zr))
+    rules[reg_value], rules[zr] = rules[zr], rules[reg_value]
   zgroups[gi] = {'carry_out': carry_out, 'carry_in': carry_in, 'carry': carry, 'self': self, 'value': value}
+
+print('res', ','.join(sorted(switches)))
