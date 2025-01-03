@@ -43,7 +43,7 @@ y03 XOR x03 -> lol (z03_self)
 baz XOR lol -> z03
 """
 
-i_init, i_grid = open('muuh.txt').read().split('\n\n')
+i_init, i_grid = open('kow.txt').read().split('\n\n')
 input_regs = ('x', 'y')
 
 rules = dict()
