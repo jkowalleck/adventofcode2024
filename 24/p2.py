@@ -78,20 +78,20 @@ for gi in range(2, 45):
   self = (xr, yr, 'XOR')
   reg_carry_out = find_rule_target(carry_out)
   if None is reg_carry_out:
-    print('ERROR', carry_out)
+    print(gi, 'ERROR', carry_out)
     raise Exception('not implemented')
   reg_carry_in = find_rule_target(carry_in)
   if None is reg_carry_in:
-    print('ERROR', carry_in)
+    print(gi, 'ERROR', carry_in)
     raise Exception('not implemented')
   reg_self = find_rule_target(self)
   if None is reg_self:
-    print('ERROR', self)
+    print(gi, 'ERROR', self)
     raise Exception('not implemented')
   carry = (*sorted((reg_carry_in, reg_carry_out)), 'OR')
   reg_carry = find_rule_target(carry)
   if None is reg_carry:
-    print('ERROR', carry)
+    print(gi, 'ERROR', carry)
     raise Exception('not implemented')
   value = (*sorted((reg_self, reg_carry)), 'XOR')
   reg_value = find_rule_target(value)
@@ -100,15 +100,15 @@ for gi in range(2, 45):
     assert op == 'XOR'
     sa, sb = sorted((reg_self, reg_carry))
     if sa != a:
-      print('switch', a, sa)
+      print(gi, 'switch', a, sa)
       switches.update((a, sa))
       rules[a], rules[sa] = rules[sa], rules[a]
     if sb != b:
-      print('switch', b, sb)
+      print(gi, 'switch', b, sb)
       switches.update((b, sb))
       rules[b], rules[sb] = rules[sb], rules[b]
   elif reg_value != zr:
-    print('switch', reg_value, zr)
+    print(gi, 'switch', reg_value, zr)
     switches.update((reg_value, zr))
     rules[reg_value], rules[zr] = rules[zr], rules[reg_value]
   zgroups[gi] = {
