@@ -35,7 +35,7 @@ input_regs = ('x', 'y')
 rules = dict()
 for g in i_grid.split('\n'):
   a, op, b, _, t = g.split(' ')
-  rules[t] = (min(a, b), max(a, b), op)
+  rules[t] = (*sorted((a, b)), op)
   del a, op, b, _, t
 del g
 
@@ -54,7 +54,7 @@ carry_out = (pvra, pvrb, 'AND')
 self = ('x01', 'y01', 'XOR')
 reg_carry_out = find_rule_target(carry_out)
 reg_self = find_rule_target(self)
-value = (min(reg_carry_out, reg_self), max(reg_carry_out, reg_self), 'XOR')
+value = (*sorted((reg_carry_out, reg_self)), 'XOR')
 zgroups[1] = {
   'carry_out': carry_out,
   'self': self,
@@ -88,17 +88,17 @@ for gi in range(2, 45):
   if None is reg_self:
     print('ERROR', self)
     raise Exception('not implemented')
-  carry = (min(reg_carry_in, reg_carry_out), max(reg_carry_in, reg_carry_out), 'OR')
+  carry = (*sorted((reg_carry_in, reg_carry_out)), 'OR')
   reg_carry = find_rule_target(carry)
   if None is reg_carry:
     print('ERROR', carry)
     raise Exception('not implemented')
-  value = (min(reg_self, reg_carry), max(reg_self, reg_carry), 'XOR')
+  value = (*sorted((reg_self, reg_carry)), 'XOR')
   reg_value = find_rule_target(value)
   if None is reg_value:
     a, b, op = value = rules[zr]
     assert op == 'XOR'
-    sa, sb = min(reg_self, reg_carry), max(reg_self, reg_carry)
+    sa, sb = sorted((reg_self, reg_carry))
     if sa != a:
       print('switch', a, sa)
       switches.update((a, sa))
