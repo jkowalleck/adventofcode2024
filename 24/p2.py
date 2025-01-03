@@ -11,22 +11,8 @@ wie funktioniert binary addition?
 ALLE x und alle y sind gegeben!
 """
 
-'x00 XOR y00 -> z00'
-'x00 AND y00 -> z00_carry'
-'x01 XOR y01 -> z01_self'
-'z01_self XOR z00_carry -> z01'
-'x01 AND y01 -> z01_self_carry'
-'z01_self_carry OR y01 -> z01_carry'
-'z02_self XOR z01_carry -> z02'
-
 """
-x00 XOR y00 -> z00
-x00 AND y00 -> 
-
-
-"""
-
-"""
+sample run
 y00 XOR x00 -> z00
 x00 AND y00 -> kkc (z00_carry_out)
 y01 XOR x01 -> kjh (z01_self)
@@ -53,48 +39,32 @@ for g in i_grid.split('\n'):
   del a, op, b, _, t
 del g
 
-def find_rule_target(value):
-  for key, val in rules.items():
-    if val == value:
-      return key
-  return None  # Return None if no matching key is found
 
+def find_rule_target(rule):
+  for t, r in rules.items():
+    if rule == r:
+      return t
+  return None
 
-"""parse given 
-zgroups = dict()
-zgroups[0] = [rules['z00']] # a xor b
-for z in range(1, 45):
-  zn = f'z{z:02d}'
-  zp = f'z{z-1:02d}'
-  zgroups[zn] = zgroup = [rules[zn]]
-  prev_rule = rules[zp]
-  prev_rule_carry_out = (prev_rule[0], prev_rule[1], 'AND')
-  todo = [rules[zn][0], rules[zn][1]]
-  while len(todo):
-    t = todo.pop(0)
-    r = rules[t]
-    zgroup.insert(0, r)
-    if r == prev_rule_carry_out:
-      continue
-    a,b, _ = r
-    if a[0] not in input_regs:
-      todo.append(a)
-    if b[0] not in input_regs:
-      todo.append(b)
-"""
 
 zgroups = {0: {'value': rules['z00']}}
 
-xp, yp, _ = zgroups[0]['value']
-carry_out = (xp, yp, 'AND')
+pvra, pvrb, _ = zgroups[0]['value']
+carry_out = (pvra, pvrb, 'AND')
 self = ('x01', 'y01', 'XOR')
 reg_carry_out = find_rule_target(carry_out)
 reg_self = find_rule_target(self)
 value = (min(reg_carry_out, reg_self), max(reg_carry_out, reg_self), 'XOR')
-zgroups[1] = {'carry_out': carry_out, 'self': self, 'value': value}
+zgroups[1] = {
+  'carry_out': carry_out,
+  'self': self,
+  'value': value
+}
 for gn, gi in zgroups[1].items():
   if gi not in rules.values():
     print('ERROR', gn, gi)
+    raise ValueError()
+del gn, gi
 
 switches = set()
 
@@ -109,16 +79,20 @@ for gi in range(2, 45):
   reg_carry_out = find_rule_target(carry_out)
   if None is reg_carry_out:
     print('ERROR', carry_out)
+    raise Exception('not implemented')
   reg_carry_in = find_rule_target(carry_in)
   if None is reg_carry_in:
     print('ERROR', carry_in)
+    raise Exception('not implemented')
   reg_self = find_rule_target(self)
   if None is reg_self:
     print('ERROR', self)
+    raise Exception('not implemented')
   carry = (min(reg_carry_in, reg_carry_out), max(reg_carry_in, reg_carry_out), 'OR')
   reg_carry = find_rule_target(carry)
   if None is reg_carry:
     print('ERROR', carry)
+    raise Exception('not implemented')
   value = (min(reg_self, reg_carry), max(reg_self, reg_carry), 'XOR')
   reg_value = find_rule_target(value)
   if None is reg_value:
@@ -137,6 +111,12 @@ for gi in range(2, 45):
     print('switch', reg_value, zr)
     switches.update((reg_value, zr))
     rules[reg_value], rules[zr] = rules[zr], rules[reg_value]
-  zgroups[gi] = {'carry_out': carry_out, 'carry_in': carry_in, 'carry': carry, 'self': self, 'value': value}
+  zgroups[gi] = {
+    'carry_out': carry_out,
+    'carry_in': carry_in,
+    'carry': carry,
+    'self': self,
+    'value': value
+  }
 
 print('res', ','.join(sorted(switches)))
